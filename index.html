@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QR Code Generator</title>
+  </head>
+  <body>
+    <main id="app">
+      <h1>QR Code Generator</h1>
+      <input type="text" id="input" placeholder="Enter your text here" />
+      <button onclick="updateQr()">Generate</button>
+      <button onclick="updateQr();copyToClipboard()">Copy</button>
+      <div id="qr"></div>
+      <textarea id="qr-code"></textarea>
+    </main>
+    <script src="qrcode.min.js"></script>
+    <script defer>
+      "use strict";
+      function updateQr() {
+        const inputEl = document.getElementById("input");
+        const qrEl = document.getElementById("qr");
+        const qr = new QRCode(inputEl.value);
+        qrEl.innerHTML = qr.svg();
+        document.getElementById("qr-code").value =
+          qrEl.querySelector("svg").outerHTML;
+      }
+      function copyToClipboard() {
+        const qrCode = document.getElementById("qr-code");
+        qrCode.select();
+        document.execCommand("copy");
+      }
+    </script>
+  </body>
+</html>
